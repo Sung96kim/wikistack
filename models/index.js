@@ -7,22 +7,36 @@ const Page = db.define('page', {
   title:{
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
 
   slug: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      isUrl: true,
+      msg: "Enter URL here"
+    }
   },
 
   content: {
-    type:Sequelize.TEXT,
+    type: Sequelize.TEXT,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      msg: "Enter your post here"
+    }
 
   },
 
   status: {
     type: Sequelize.ENUM('open', 'closed'),
     allowNull: false,
+    validate: {
+      equals: ('open' || 'closed')
+    }
   }
 })
 
