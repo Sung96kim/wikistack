@@ -8,7 +8,8 @@ const Page = db.define('page', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      msg: "Enter Title here"
     }
   },
 
