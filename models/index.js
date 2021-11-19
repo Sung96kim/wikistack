@@ -9,17 +9,23 @@ const Page = db.define('page', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      msg: "Enter Title here"
     }
   },
 
   slug: {
     type: Sequelize.STRING,
     allowNull: false,
+    hooks: {
+      beforeValidate: function generateSlug(title) {
+        // Removes all non-alphanumeric characters from title
+        // And make whitespace underscore
+        return title.replace(/\s+/g, '_').replace(/\W/g, '');
+      }
+    },
     validate: {
       isUrl: true,
-      msg: "Enter URL here"
-    }
+    },
+
   },
 
   content: {
@@ -27,7 +33,6 @@ const Page = db.define('page', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      msg: "Enter your post here"
     }
 
   },
@@ -37,6 +42,7 @@ const Page = db.define('page', {
     allowNull: false,
     validate: {
       equals: ('open' || 'closed')
+      //Set default to open
     }
   }
 })
@@ -47,7 +53,6 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       isAlpha: true,
-      msg: 'Please enter your name'
     }
   },
 
@@ -56,7 +61,6 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       isEmail: true,
-      msg: 'Please enter your email'
     }
   }
 })

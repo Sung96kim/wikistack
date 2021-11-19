@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const client = require("../models")
+const { Page } = require("../models")
 const { addPage } = require("../views")
 const layout = require('../views/layout')
 
@@ -14,7 +14,17 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async(req, res, next) => {
   try{
+
+    const page = await Page.create({
+      title: req.body.title,
+      content: req.body.content,
+      status: req.body.status,
+      // slug:
+    })
+    res.redirect('/')
+
     console.log('POST REQUEST')
+    console.log(req.body)
   }catch(err){
     next(err)
   }
